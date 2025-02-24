@@ -1,0 +1,35 @@
+replicaCount: 2
+
+image:
+  repository: registry.gitlab.com/devops3492507/isi-helm/stock-ms
+  tag: latest
+  pullPolicy: Always
+
+imagePullSecrets:
+  - name: gitlab-registry
+
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  create: false
+  name: ""
+
+podAnnotations: {}
+
+podSecurityContext: {}
+
+securityContext: {}
+
+service:
+  type: NodePort
+  port: 8080
+  targetPort: 8080
+
+resources:
+  limits:
+    cpu: 500m
+    memory: 512Mi
+  requests:
+    cpu: 200m
+    memory: 256Mi

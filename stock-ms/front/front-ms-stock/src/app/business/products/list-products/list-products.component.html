@@ -1,0 +1,26 @@
+<div class="card">
+  <div class="card-header">Liste</div>
+  <div class="card-body">
+    <table class="table">
+      <thead>
+      <tr>
+        <th>Reference</th>
+        <th>Nom</th>
+        <th>Quantite en stock</th>
+        <th>ID de user</th>
+      </tr>
+      </thead>
+      <tbody>
+        @for (product of productsList.products; track product.ref) {
+          <tr>
+            <td>{{ product.ref }}</td>
+            <td>{{ product.name }}</td>
+            <td>{{ product.stock }}</td>
+            <td>{{ product.idUser }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+  <div class="card-footer">Liste</div>
+</div>

@@ -1,0 +1,47 @@
+stages:
+  - build
+  - test
+  - deploy
+
+image: node:22.13.0
+
+#Build du projet angular
+build job:
+  cache:
+    paths:
+      - node_modules/
+  stage: build
+  script:
+    - npm cache clean --force
+    - npm install -f
+    - npm run build
+    - mkdir -p artifact
+    - mv dist/stock-ms-web/browser/* artifact/
+  artifacts:
+    paths:
+      - artifact
+  #only:
+    #- main
+
+#Mise de l'exeution des TU
+test job:
+  stage: test
+  script:
+    - echo 'test'
+    #- npm install
+    #- npm install -g @angular/cli
+    #- npm test
+    #- echo "Les tests sont executees"
+
+#Mise en place du job deploy
+deploy job:
+  stage: deploy
+  image: docker:latest
+  services:
+    - docker:dind
+  script:
+    - docker build -t $DOCKER_HUB_USER/back-office-web:0.0.1 .
+    - docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_TOKEN
+    - docker push $DOCKER_HUB_USER/back-office-web:0.0.1
+    - docker image ls
+  when: manual
